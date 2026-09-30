@@ -1,0 +1,32 @@
+@*
+    LiteState - EmptyState Component
+    Resuelve: pantalla vacia con explicacion y accion. Nunca una lista/holder
+    queda sin guia.
+    Usage:
+    @Html.Partial("~/Views/Shared/Components/_EmptyState.cshtml",
+        new ViewDataDictionary {
+            { "Title", "No tienes clientes" },
+            { "Description", "Crea tu primer cliente para empezar" },
+            { "ActionUrl", Url.Action("Create") },
+            { "ActionLabel", "Crear Cliente" }
+        })
+*@
+@{
+    string title = ViewBag.Title ?? "Sin datos";
+    string description = ViewBag.Description ?? "";
+    string actionUrl = ViewBag.ActionUrl ?? "";
+    string actionLabel = ViewBag.ActionLabel ?? "";
+}
+
+<div class="ls-empty">
+    <div class="ls-empty__icon" aria-hidden="true">🗂️</div>
+    <h2 class="ls-empty__title">@title</h2>
+    @if (!string.IsNullOrEmpty(description))
+    {
+        <p class="ls-empty__desc">@description</p>
+    }
+    @if (!string.IsNullOrEmpty(actionUrl))
+    {
+        <a class="ls-btn ls-btn--primary ls-mt-16" href="@actionUrl">@actionLabel</a>
+    }
+</div>

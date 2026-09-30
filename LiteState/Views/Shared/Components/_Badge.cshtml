@@ -1,0 +1,17 @@
+@*
+    LiteState - Badge Component
+    Resuelve: etiqueta de estado operativo con color semantico (success/warning/danger/neutral).
+    Usage:
+    @Html.Partial("~/Views/Shared/Components/_Badge.cshtml",
+        new ViewDataDictionary {
+            { "Text", "PRODUCIENDO" },
+            { "Tone", "success" }
+        })
+    Tone: success | warning | danger | neutral
+*@
+@{
+    string text = ViewBag.Text ?? "";
+    string tone = ViewBag.Tone ?? "neutral";
+}
+
+<span class="ls-badge ls-badge--@tone">@text</span>

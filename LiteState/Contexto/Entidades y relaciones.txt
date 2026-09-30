@@ -1,0 +1,428 @@
+# 🧩 LITESTATE — MODELO DE ENTIDADES Y RELACIONES (AGREGADO AL CONTEXTO)
+
+## 🎯 OBJETIVO DEL MODELO
+
+Diseñar un modelo:
+
+* simple
+* escalable
+* optimizado para dashboards
+* compatible con EF Core + SQL Server
+* preparado para multiempresa futura
+
+---
+
+# 🏢 EMPRESA
+
+Representa una organización/cliente del sistema.
+
+## Propósito
+
+Preparar LiteState para SaaS y separación de datos.
+
+## Relaciones
+
+Empresa:
+
+* tiene muchos Usuarios
+* tiene muchos Sectores
+* tiene muchos Estados
+* tiene muchos Dashboards
+
+---
+
+## Campos principales
+
+```csharp id="5z2jvq"
+Id
+Nombre
+LogoUrl
+Activa
+```
+
+---
+
+# 👤 USUARIO
+
+Hereda de:
+
+```csharp id="r8m4nb"
+IdentityUser<int>
+```
+
+## Propósito
+
+Usuarios operativos y administrativos.
+
+## Relaciones
+
+Usuario:
+
+* pertenece a una Empresa
+* tiene muchos UsuarioSectores
+* puede generar muchos Eventos
+
+---
+
+## Campos principales
+
+```csharp id="uq5s3f"
+Id
+NombreCompleto
+EmpresaId
+Activo
+```
+
+---
+
+# 🏭 SECTOR
+
+Representa una línea, área o sector operativo.
+
+## Propósito
+
+Unidad principal de monitoreo.
+
+## Relaciones
+
+Sector:
+
+* pertenece a Empresa
+* tiene muchos Eventos
+* tiene un EstadoActual
+* puede estar asignado a muchos Usuarios
+* puede pertenecer a Dashboards
+
+---
+
+## Campos principales
+
+```csharp id="y6v3ht"
+Id
+EmpresaId
+Nombre
+Orden
+Activo
+```
+
+---
+
+## Campos configurables
+
+Cada sector puede definir hasta 3 campos:
+
+```csharp id="x4n9lp"
+Campo1Nombre
+Campo1Tipo
+
+Campo2Nombre
+Campo2Tipo
+
+Campo3Nombre
+Campo3Tipo
+```
+
+---
+
+# 🔗 USUARIOSECTOR
+
+Tabla intermedia muchos-a-muchos.
+
+## Propósito
+
+Permitir que:
+
+* un usuario opere varios sectores
+* un sector tenga varios usuarios
+
+---
+
+## Relaciones
+
+```plaintext id="u7r1wd"
+Usuario ↔ UsuarioSector ↔ Sector
+```
+
+---
+
+## Campos principales
+
+```csharp id="s3m7fo"
+UsuarioId
+SectorId
+```
+
+---
+
+# 🚦 ESTADO
+
+Representa estados operativos configurables.
+
+## Ejemplos
+
+* Produciendo
+* Esperando
+* Problema
+* Finalizado
+
+---
+
+## Relaciones
+
+Estado:
+
+* pertenece a Empresa
+* tiene muchos Eventos
+* puede existir en EstadoActual
+
+---
+
+## Campos principales
+
+```csharp id="q1x8zr"
+Id
+EmpresaId
+Nombre
+ColorHex
+Orden
+Activo
+EsFinalizado
+```
+
+---
+
+# 📝 EVENTO
+
+Representa el histórico operativo.
+
+## Propósito
+
+Guardar todos los cambios de estado.
+
+---
+
+## Filosofía
+
+Evento:
+
+* solo INSERT
+* nunca UPDATE
+* nunca DELETE lógico operativo
+
+---
+
+## Relaciones
+
+Evento:
+
+* pertenece a Empresa
+* pertenece a Sector
+* pertenece a Estado
+* pertenece a Usuario
+
+---
+
+## Campos principales
+
+```csharp id="m8t4qp"
+Id
+EmpresaId
+SectorId
+EstadoId
+UsuarioId
+FechaHora
+```
+
+---
+
+## Valores operativos
+
+```csharp id="c5n1yw"
+Campo1Valor
+Campo2Valor
+Campo3Valor
+```
+
+---
+
+# ⚡ ESTADOACTUAL
+
+Tabla optimizada para dashboards.
+
+## Propósito
+
+Evitar consultas pesadas al histórico.
+
+---
+
+## Filosofía
+
+Existe:
+
+* un único EstadoActual por Sector
+
+Comportamiento:
+
+* UPDATE cuando cambia estado
+
+---
+
+## Relaciones
+
+EstadoActual:
+
+* pertenece a Sector
+* pertenece a Estado
+* pertenece a Usuario
+
+---
+
+## Campos principales
+
+```csharp id="r4k2ye"
+SectorId
+EstadoId
+UsuarioId
+FechaHora
+```
+
+---
+
+## Valores operativos
+
+```csharp id="g7w3nm"
+Campo1Valor
+Campo2Valor
+Campo3Valor
+```
+
+---
+
+# 📺 DASHBOARD
+
+Representa pantallas y monitores.
+
+## Propósito
+
+Visualización operativa en TVs y oficinas.
+
+---
+
+## Relaciones
+
+Dashboard:
+
+* pertenece a Empresa
+* opcionalmente pertenece a un Sector
+
+---
+
+## Tipos soportados
+
+* General
+* Sectorial
+* Administrativo
+
+---
+
+## Acceso
+
+```plaintext id="p9f6ra"
+/monitor/{token}
+```
+
+---
+
+## Campos principales
+
+```csharp id="o3z8kc"
+Id
+EmpresaId
+Nombre
+Token
+Tipo
+SectorId
+Activo
+```
+
+---
+
+# 🔄 RELACIONES GENERALES
+
+```plaintext id="k6v4tj"
+Empresa
+ ├── Usuarios
+ ├── Sectores
+ ├── Estados
+ └── Dashboards
+
+Usuario
+ ├── UsuarioSectores
+ └── Eventos
+
+Sector
+ ├── UsuarioSectores
+ ├── Eventos
+ ├── EstadoActual
+ └── Dashboards
+
+Estado
+ ├── Eventos
+ └── EstadoActual
+
+Evento
+ ├── Usuario
+ ├── Sector
+ └── Estado
+```
+
+---
+
+# ⚡ OPTIMIZACIONES IMPORTANTES
+
+## EstadoActual
+
+Tabla física optimizada para:
+
+* dashboards rápidos
+* menos carga SQL
+* hosting compartido
+
+---
+
+## Evento
+
+Histórico append-only para:
+
+* trazabilidad
+* auditoría
+* métricas futuras
+
+---
+
+# 🧠 DECISIONES ARQUITECTÓNICAS CLAVE
+
+✔ máximo 3 campos configurables
+✔ usuarios multi-sector
+✔ dashboards desacoplados
+✔ acceso monitor vía token
+✔ histórico separado de estado vivo
+✔ multiempresa preparada desde el inicio
+
+---
+
+# 🎯 FILOSOFÍA GENERAL DEL MODELO
+
+El modelo prioriza:
+
+* simplicidad
+* velocidad operativa
+* claridad
+* escalabilidad gradual
+
+Evita:
+
+* estructuras excesivamente genéricas
+* sobreingeniería
+* formularios complejos
+* dependencias innecesarias

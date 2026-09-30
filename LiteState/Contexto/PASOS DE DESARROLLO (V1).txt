@@ -1,0 +1,178 @@
+# 🧭 LITESTATE — PRÓXIMOS PASOS DE DESARROLLO (V1)
+
+## 🎯 OBJETIVO ACTUAL
+
+Pasar de arquitectura conceptual a una V1 real, usable y desplegable.
+
+La prioridad ahora es:
+
+* definir exactamente qué tendrá la V1
+* diseñar pantallas reales
+* preparar implementación técnica ASP.NET Core
+
+---
+
+# 🥇 PASO 1 — DEFINIR MVP V1
+
+La V1 debe enfocarse únicamente en lo esencial.
+
+## ✅ INCLUIR
+
+### Operación
+
+* Login
+* Selección de sector
+* Actualización rápida de estados
+* Hasta 3 campos configurables
+* Usuario multi-sector
+
+### Monitores
+
+* Dashboard general
+* Dashboard por sector
+* Polling cada 5 segundos
+* Estados visuales
+* Finalizados atenuados
+
+### Administración
+
+* CRUD Usuarios
+* CRUD Sectores
+* CRUD Estados
+* CRUD Dashboards
+* Asignación UsuarioSector
+
+### Histórico
+
+* Lista simple de eventos
+* Filtros básicos
+
+---
+
+## ❌ NO INCLUIR EN V1
+
+* métricas complejas
+* gráficos
+* SignalR
+* notificaciones
+* QR
+* app móvil
+* reportes
+* APIs públicas
+* dashboards avanzados
+* multiempresa avanzada
+
+---
+
+# 🥈 PASO 2 — DEFINIR NAVEGACIÓN REAL
+
+## Estructura inicial
+
+```plaintext id="v8m2zt"
+/Login
+
+/Operacion
+    /Sectores
+    /Estado
+
+/Monitor
+    /General/{token}
+    /Sector/{token}
+
+/Admin
+    /Usuarios
+    /Sectores
+    /Estados
+    /Dashboards
+
+/Historico
+    /Eventos
+```
+
+---
+
+# 🥉 PASO 3 — DISEÑAR PANTALLAS REALES
+
+Diseñar UX real de:
+
+1. Login
+2. Selector de sector
+3. Pantalla operario
+4. Dashboard TV principal
+5. CRUD administración
+
+Objetivos:
+
+* rapidez
+* claridad
+* uso táctil
+* mínima navegación
+* visibilidad en TV
+
+---
+
+# 🏗️ PASO 4 — DEFINIR IMPLEMENTACIÓN TÉCNICA
+
+Crear solución real:
+
+```plaintext id="f5q1nr"
+LiteState.sln
+```
+
+## Proyectos
+
+```plaintext id="g4t8kp"
+LiteState.Web
+LiteState.Application
+LiteState.Domain
+LiteState.Infrastructure
+```
+
+## Implementar:
+
+* DbContext
+* EF Core
+* Identity
+* migraciones
+* entidades
+* relaciones
+* Controllers
+* Services
+
+---
+
+# ⚡ PRIORIDAD DE DESARROLLO
+
+## Fase 1
+
+Operación
+
+## Fase 2
+
+Dashboard TV
+
+## Fase 3
+
+Administración
+
+## Fase 4
+
+Histórico
+
+---
+
+# 🎯 FILOSOFÍA DE DESARROLLO
+
+LiteState debe:
+
+* sentirse rápido
+* ser simple
+* funcionar bien en hosting compartido
+* evitar sobreingeniería
+* crecer sin rehacer arquitectura
+
+---
+
+# 🚀 SIGUIENTE PASO CORRECTO
+
+Diseñar las pantallas reales V1 antes de comenzar implementación técnica.

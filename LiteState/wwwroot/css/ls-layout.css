@@ -1,0 +1,188 @@
+/*
+   LiteState - Layout / AppShell
+   Estructura global: topbar + content area. Zonas fijas del sistema.
+   Los modulos se renderizan UNICAMENTE dentro del content area.
+   Los dashboards TV usan un shell vacio (ls-shell--tv) sin topbar.
+*/
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--ls-font-sans);
+  font-size: var(--ls-text-base);
+  color: var(--ls-text-primary);
+  background: var(--ls-bg);
+  min-height: 100vh;
+}
+
+/* ---------- AppShell web (operacion / admin / historico) ---------- */
+.ls-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.ls-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ls-space-3);
+  height: var(--ls-topbar-h);
+  padding: 0 var(--ls-space-4);
+  background: var(--ls-surface);
+  border-bottom: 1px solid var(--ls-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.ls-topbar__brand {
+  font-weight: 800;
+  font-size: var(--ls-text-lg);
+  color: var(--ls-text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ls-topbar__brand::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ls-success);
+}
+
+.ls-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ls-space-2);
+}
+
+.ls-content {
+  flex: 1;
+  width: 100%;
+  max-width: var(--ls-content-max);
+  margin: 0 auto;
+  padding: var(--ls-space-5) var(--ls-space-4);
+}
+
+/* ---------- AppShell TV (dashboards) ---------- */
+.ls-shell--tv {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--ls-bg);
+  overflow: hidden;
+}
+
+.ls-tv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ls-space-4);
+  padding: var(--ls-space-3) var(--ls-space-6);
+  background: var(--ls-surface);
+  border-bottom: 1px solid var(--ls-border);
+}
+
+.ls-tv-header__brand {
+  font-weight: 800;
+  font-size: var(--ls-text-2xl);
+  color: var(--ls-text-primary);
+}
+
+.ls-tv-header__stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-size: var(--ls-text-lg);
+}
+
+.ls-tv-header__clock {
+  font-size: var(--ls-text-3xl);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.ls-tv-header__updated {
+  font-size: var(--ls-text-sm);
+  color: var(--ls-text-secondary);
+}
+
+.ls-tv-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--ls-space-5) var(--ls-space-6);
+  overflow: hidden;
+}
+
+/* Grid de tarjetas de sector (dashboard TV) */
+.ls-tv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ls-space-4);
+  flex: 1;
+  align-content: stretch;
+}
+
+@media (max-width: 1200px) {
+  .ls-tv-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .ls-tv-grid { grid-template-columns: 1fr; }
+}
+
+/* Tarjeta de sector para dashboard TV */
+.ls-tv-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--ls-space-4);
+  border-radius: var(--ls-radius-lg);
+  border: 1px solid var(--ls-border);
+  background: var(--ls-surface);
+  box-shadow: var(--ls-shadow);
+  min-height: 220px;
+}
+
+.ls-tv-card__name {
+  font-size: var(--ls-text-xl);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  color: var(--ls-text-primary);
+}
+
+.ls-tv-card__status {
+  font-size: var(--ls-text-2xl);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ls-tv-card__fields { gap: var(--ls-space-1); }
+.ls-tv-card__field { font-size: var(--ls-text-lg); }
+
+.ls-tv-card__updated {
+  font-size: var(--ls-text-sm);
+  color: var(--ls-text-secondary);
+  margin-top: var(--ls-space-2);
+}
+
+/* Estados por color de fondo (variantes por ColorHex del Estado) */
+.ls-tv-card.is-success { background: var(--ls-success-bg); border-color: var(--ls-success); }
+.ls-tv-card.is-warning { background: var(--ls-warning-bg); border-color: var(--ls-warning); }
+.ls-tv-card.is-danger  { background: var(--ls-danger-bg);  border-color: var(--ls-danger); }
+
+/* Estado finalizado: atenuado, menor protagonismo */
+.ls-tv-card.is-neutral {
+  background: var(--ls-surface-muted);
+  border-color: var(--ls-border);
+  opacity: .72;
+  filter: grayscale(.35);
+}

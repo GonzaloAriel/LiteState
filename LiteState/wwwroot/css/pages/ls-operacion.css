@@ -1,0 +1,55 @@
+/*
+   LiteState - Pagina del modulo Operacion
+   Solo estilos exclusivos de Operacion. Uso exclusivo de tokens ls-*.
+*/
+
+/* Selector de sector del header */
+.ls-sector-select {
+  width: 300px;
+  max-width: 100%;
+}
+
+.ls-estado-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--ls-space-3);
+}
+
+@media (max-width: 480px) {
+  .ls-estado-grid { grid-template-columns: 1fr; }
+}
+
+.ls-estado-btn {
+  padding: 22px 16px;
+  border: none;
+  border-radius: var(--ls-radius-lg);
+  font-family: var(--ls-font-sans);
+  font-size: var(--ls-text-xl);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: var(--ls-shadow);
+  transition: transform .08s ease, filter .15s ease;
+  min-height: 92px;
+}
+
+.ls-estado-btn.is-success { background: var(--ls-success); }
+.ls-estado-btn.is-warning { background: var(--ls-warning); }
+.ls-estado-btn.is-danger  { background: var(--ls-danger); }
+.ls-estado-btn.is-neutral { background: var(--ls-neutral); }
+
+.ls-estado-btn:active { transform: scale(.98); }
+.ls-estado-btn:focus-visible { outline: 3px solid var(--ls-accent); outline-offset: 2px; }
+
+.ls-feedback {
+  margin-top: var(--ls-space-3);
+  padding: var(--ls-space-3);
+  border-radius: var(--ls-radius);
+  font-weight: 600;
+  text-align: center;
+}
+
+.ls-feedback.is-success { background: var(--ls-success-bg); color: var(--ls-success); }
+.ls-feedback.is-error   { background: var(--ls-danger-bg);  color: var(--ls-danger); }

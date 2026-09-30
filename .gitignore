@@ -3,6 +3,16 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# --- LiteState: nunca subir al repo -------------------------------
+# Backups de la base. Son datos de la empresa, no codigo, y pueden
+# contener datos sensibles de usuarios. Ademas pesan y ensucian el historial.
+Backups/
+# Base de datos volcada durante pruebas
+*.sql
+# .env con secretos (PATRON_AB*/POSTGRES_*/REDIS_*) - ver mas abajo
+# Descomentar si se elige versionar el ejemplo sin secretos reales:
+# .env.example
+
 # User-specific files
 *.rsuser
 *.suo

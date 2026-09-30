@@ -1,0 +1,153 @@
+# ============================================================
+# LiteState - stack completo
+# Levantar:  docker compose up -d --build
+# Ver logs:   docker compose logs -f app
+# Parar:      docker compose down      (NO borra los datos)
+# ============================================================
+
+# Fijar el nombre del proyecto: determina los nombres de red y volumen.
+# Sin esto, compose lo deduce del nombre de la carpeta y un rename
+# del repo crearia un volumen VACIO (base de datos en blanco).
+name: litestate
+
+services:
+  # ----------------------------------------------------------
+  # UNICA PUERTA DE ENTRADA.
+  # Publica el puerto 80 y reenvia todo a la app. Nadie mas esta
+  # expuesto: postgres, redis y la app viven solo en la red interna.
+  # ----------------------------------------------------------
+  nginx:
+    # Version fijada, nunca `latest`: el stack tiene que ser
+    # reproducible (mismo criterio que postgres:17 y redis:8).
+    image: nginx:1.29-alpine
+    container_name: litestate-nginx
+    restart: unless-stopped
+    ports:
+      # 127.0.0.1: en el laboratorio solo vos. En el VPS esto pasa a
+      # "80:80" (sin IP) porque ahi si tiene que ser publico.
+      # Coherente con D-020.
+      - "127.0.0.1:80:80"
+    volumes:
+      # `:ro` = solo lectura. nginx no necesita escribir su config, y
+      # con esto un bug de la app no puede alterarla.
+      - ./nginx/litestate.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      app:
+        # Espera a que la app este REALMENTE sana, no solo arrancada.
+        # Sin esto, nginx levanta antes y las primeras peticiones dan 502
+        # hasta que Kestrel termine de iniciar.
+        condition: service_healthy
+    healthcheck:
+      # `/nginx-health` lo resuelve nginx mismo, sin pasar por el proxy.
+      # A proposito: si el healthcheck pegara contra la app, un fallo de
+      # PostgreSQL marcaria a nginx como unhealthy y `docker compose ps`
+      # mostraria un culpable equivocado.
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1/nginx-health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # ----------------------------------------------------------
+  # Tarea de un solo uso: igualar los permisos del volumen de claves.
+  # Docker crea los volumenes como root (0:0), pero la app corre sin root.
+  # Sin esto, DataProtection tira UnauthorizedAccessException al arrancar.
+  # Corre, arregla permisos y termina. `restart: no` es obligatorio.
+  # ----------------------------------------------------------
+  appkeys-init:
+    image: alpine:latest
+    container_name: litestate-appkeys-init
+    user: root
+    command: chown -R ${APP_UID}:${APP_UID} /keys && chmod 700 /keys
+    volumes:
+      - appkeys:/keys
+    restart: "no"
+
+  # ----------------------------------------------------------
+  # La app .NET. Habla con postgres por DNS interno:
+  # Host=postgres NO es una IP ni un nombre inventado: es el alias
+  # que compose registra solo en esta red.
+  # ----------------------------------------------------------
+  app:
+    build:
+      context: ./LiteState
+      dockerfile: Dockerfile
+    image: litestate:1.0
+    container_name: litestate-app
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      # __ = un nivel mas abajo en el JSON de configuracion.
+      # Las variables de entorno pisan a appsettings.json.
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      # Claves de cifrado de cookies/identidad. Sin esto, recrear el
+      # contenedor invalida la sesion de todos los usuarios.
+      DataProtection__Keys__Path: ${DataProtection__Keys__Path}
+    volumes:
+      # Coincide con DataProtection__Keys__Path de .env
+      - appkeys:/var/lib/litestate-keys
+    # ----------------------------------------------------------
+    # SIN `ports:` a proposito. La app ya no se publica en el host:
+    # no existe ningun camino desde tu PC ni desde Internet hasta
+    # Kestrel. La unica entrada es el servicio `nginx` de abajo, que
+    # llega igual porque ambos comparten la red `litestate_default`.
+    #
+    # El HEALTHCHECK del Dockerfile sigue funcionando: corre DENTRO
+    # del contenedor contra localhost:8080 y nunca dependio del
+    # puerto publicado.
+    # ----------------------------------------------------------
+    depends_on:
+      postgres:
+        # Espera a que postgres este REALMENTE listo, no solo arrancado.
+        condition: service_healthy
+      appkeys-init:
+        # Espera a que termine bien, no a que "arranque".
+        condition: service_completed_successfully
+    # NO se declara `networks:` a proposito: compose crea la red
+    # `litestate_default` automaticamente y es la que da los alias.
+
+  # ----------------------------------------------------------
+  # Base de datos
+  # ----------------------------------------------------------
+  postgres:
+    image: postgres:17-alpine
+    container_name: litestate-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      # Necesario para que `dotnet run` en tu host se conecte a
+      # localhost:5432 durante el desarrollo. 127.0.0.1 impide
+      # que postgres quede expuesto a la red local.
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ----------------------------------------------------------
+  # Cache (para el futuro: estado en memoria y pub/sub)
+  # ----------------------------------------------------------
+  redis:
+    image: redis:8-alpine
+    container_name: litestate-redis
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
+  redisdata:
+  appkeys:

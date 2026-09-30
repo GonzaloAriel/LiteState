@@ -1,0 +1,25 @@
+# Salidas de build: NUNCA van a la imagen.
+# Ademas, obj/project.assets.json de tu maquina tiene rutas absolutas
+# (/home/tu-usuario/...) que rompen el `dotnet restore` dentro del contenedor.
+bin/
+obj/
+
+# Editores / IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentacion: no la necesita el binario
+*.md
+AI/
+Docs/
+Contexto/
+
+# Config de desarrollo: contiene la connection string local con password.
+# En produccion la base se define por variable de entorno, no por archivo.
+appsettings.Development.json

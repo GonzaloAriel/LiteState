@@ -1,0 +1,267 @@
+# 👷 LITESTATE — PANTALLA OPERARIO (AGREGADO AL CONTEXTO)
+
+## 🎯 OBJETIVO
+
+La pantalla del operario debe permitir:
+
+> actualizar un estado operativo en 2–3 segundos.
+
+El sistema debe priorizar:
+
+* velocidad
+* simplicidad
+* uso táctil
+* mínima escritura
+
+---
+
+## ⚠️ PRINCIPIO CRÍTICO
+
+> “La carga debe ser más rápida que comunicarlo verbalmente.”
+
+---
+
+## 📱 CONTEXTO DE USO
+
+La pantalla será utilizada en:
+
+* celulares
+* tablets
+* notebooks
+* PCs industriales
+
+En entornos:
+
+* ruidosos
+* operativos
+* con usuarios no técnicos
+
+---
+
+## 🧱 ESTRUCTURA DE LA PANTALLA
+
+La pantalla operario se divide en 4 zonas:
+
+---
+
+## 🔷 1. HEADER SUPERIOR
+
+Muestra:
+
+* nombre usuario
+* sector actual
+* selector rápido de sector
+
+Ejemplo:
+
+```plaintext id="v7n5ta"
+Juan Pérez
+Sector: Producción Línea 1 ▼
+```
+
+---
+
+## 👤 USUARIO MULTI-SECTOR
+
+Un usuario puede tener asignados múltiples sectores.
+
+La pantalla debe permitir:
+
+* cambiar rápidamente entre sectores
+* recordar el último sector utilizado
+
+---
+
+## 🔷 2. CAMPOS OPERATIVOS
+
+Cada sector puede definir hasta 3 campos configurables.
+
+Tipos:
+
+* texto corto
+* número
+* lista
+
+Ejemplo:
+
+```plaintext id="ibn7kx"
+Orden
+[____________]
+
+Lote
+[____________]
+
+Cantidad
+[____________]
+```
+
+---
+
+## ⚡ OPTIMIZACIÓN DE CARGA
+
+Objetivo:
+
+* minimizar escritura manual
+
+Posibles optimizaciones:
+
+* recordar últimos valores
+* reutilización rápida
+* listas desplegables
+* futuros lectores QR/código barras
+
+---
+
+## 🔷 3. BOTONES DE ESTADO
+
+Los estados son el núcleo de la interacción.
+
+Diseño:
+
+* botones grandes
+* táctiles
+* coloridos
+* muy visibles
+
+Ejemplo:
+
+```plaintext id="l4t9ks"
+🟢 PRODUCIENDO
+
+🟡 ESPERANDO
+
+🔴 PROBLEMA
+
+⚫ FINALIZADO
+```
+
+---
+
+## ⚡ COMPORTAMIENTO
+
+Al presionar un estado:
+
+1. se validan campos mínimos
+2. se guarda automáticamente
+3. se actualiza EstadoActual
+4. se inserta Evento histórico
+5. se muestra confirmación visual
+
+---
+
+## ⚠️ REGLA IMPORTANTE
+
+NO existe botón “Guardar”.
+
+> El botón de estado ES la acción de guardar.
+
+---
+
+## 🔷 4. FEEDBACK VISUAL
+
+Después de guardar:
+
+```plaintext id="o3r2zm"
+✅ Estado actualizado correctamente
+Hace 2 segundos
+```
+
+Objetivo:
+
+* dar seguridad al operario
+* evitar dudas de guardado
+
+---
+
+## 📱 FILOSOFÍA UX
+
+La pantalla NO debe sentirse:
+
+* administrativa
+* pesada
+* técnica
+
+Debe sentirse:
+
+> rápida, directa y operacional.
+
+---
+
+## 🚫 COSAS A EVITAR
+
+* formularios largos
+* múltiples pasos
+* navegación compleja
+* exceso de validaciones
+* exceso de escritura manual
+
+---
+
+## 🎨 DISEÑO VISUAL
+
+### Reglas:
+
+* tipografía grande
+* elementos táctiles
+* espaciado amplio
+* alto contraste
+* diseño mobile-first
+
+---
+
+## 🔥 ESTADOS SOPORTADOS
+
+### 🟢 Produciendo
+
+Operación normal
+
+### 🟡 Esperando
+
+Pausa / transición
+
+### 🔴 Problema
+
+Bloqueo / falla
+
+### ⚫ Finalizado
+
+Proceso completado
+
+---
+
+## ⏳ COMPORTAMIENTO DE FINALIZADO
+
+Cuando un proceso termina:
+
+* el operador marca FINALIZADO
+* el dashboard mantiene visible temporalmente el sector
+* visualmente se atenúa
+* luego puede ocultarse automáticamente
+
+---
+
+## 🔄 RELACIÓN CON DASHBOARDS
+
+Toda actualización:
+
+* impacta en tiempo real visual
+* actualiza TVs y dashboards
+* alimenta histórico operativo
+
+---
+
+## 🎯 OBJETIVO FINAL
+
+Operario:
+
+* casi no escribe
+* no navega
+* actualiza rápido
+
+Empresa:
+
+* obtiene visibilidad operativa en tiempo real
+
+Sistema:
+
+* se siente vivo y simple de usar

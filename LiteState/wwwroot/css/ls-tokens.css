@@ -1,0 +1,55 @@
+/*
+   LiteState - Design Tokens
+   Single source of truth for all visual variables.
+   Do NOT hardcode values. Use these variables everywhere.
+*/
+
+:root {
+  /* Color */
+  --ls-bg: #f5f5f7;                 /* fondo general */
+  --ls-surface: #ffffff;            /* tarjetas, paneles */
+  --ls-surface-muted: #fafafa;      /* contenido atenuado / finalizado */
+  --ls-border: #e8e8ed;
+  --ls-text-primary: #1d1d1f;
+  --ls-text-secondary: #86868b;
+  --ls-accent: #2563eb;             /* acción primaria */
+  --ls-accent-hover: #1d4ed8;
+  --ls-success: #34c759;            /* operando normalmente */
+  --ls-success-bg: #e6f7ea;
+  --ls-warning: #ff9500;            /* espera / transición */
+  --ls-warning-bg: #fff4e0;
+  --ls-danger: #ff3b30;             /* problema / detenido */
+  --ls-danger-bg: #ffe8e6;
+  --ls-neutral: #6c757d;            /* finalizado / gris */
+
+  /* Tipografía (escala fija, nunca tamaños arbitrarios) */
+  --ls-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ls-text-xs: 0.75rem;
+  --ls-text-sm: 0.8125rem;
+  --ls-text-base: 0.875rem;
+  --ls-text-lg: 1.125rem;
+  --ls-text-xl: 1.25rem;
+  --ls-text-2xl: 1.5rem;
+  --ls-text-3xl: 1.875rem;
+  --ls-text-4xl: 2.25rem;
+
+  /* Espaciado (escala base 8px; nada aleatorio) */
+  --ls-space-1: 4px;
+  --ls-space-2: 8px;
+  --ls-space-3: 16px;
+  --ls-space-4: 24px;
+  --ls-space-5: 32px;
+  --ls-space-6: 48px;
+
+  /* Forma y profundidad */
+  --ls-radius: 10px;
+  --ls-radius-sm: 6px;
+  --ls-radius-lg: 16px;
+  --ls-shadow: 0 1px 3px rgba(0,0,0,.06);
+  --ls-shadow-lg: 0 4px 16px rgba(0,0,0,.12);
+
+  /* Layout */
+  --ls-topbar-h: 56px;
+  --ls-sidebar-w: 230px;
+  --ls-content-max: 1200px;
+}

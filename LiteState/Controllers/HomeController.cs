@@ -15,8 +15,7 @@ namespace LiteState.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Time = DateTime.Now.ToString("HH:mm:ss");
-            return View();
+            return RedirectToAction("Index", "Operacion");
         }
 
         public IActionResult Privacy()

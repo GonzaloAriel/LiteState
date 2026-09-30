@@ -1,0 +1,1929 @@
+# 🧠 LITESTATE — BASE CONCEPTUAL Y TÉCNICA (RESUMEN)
+
+## 🎯 PROPÓSITO
+
+Sistema web para **visualizar en tiempo real el estado operativo** de una empresa, enfocado en:
+
+* simplicidad
+* rapidez de carga
+* claridad visual en monitores (TV / pantallas)
+
+---
+
+## 🧭 ENFOQUE PRINCIPAL
+
+El sistema NO gestiona tareas ni órdenes complejas.
+
+El sistema está orientado a:
+
+> “Capturar y mostrar el estado actual de cada sector en tiempo real, con información mínima clave.”
+
+---
+
+## 🧱 MODELO CONCEPTUAL
+
+### 🔹 Estado actual
+
+* Representa qué está pasando ahora en cada sector
+* 1 estado por sector
+* visible en dashboards
+
+---
+
+### 🔹 Eventos
+
+* Cada cambio de estado genera un registro histórico
+* Permite trazabilidad y métricas futuras
+
+---
+
+## 🏭 ENTIDADES PRINCIPALES
+
+* Empresa
+* Usuario
+* Sector
+* Estado
+* Evento
+* EstadoActual (optimización)
+* Dashboard (monitores)
+
+---
+
+## 👤 ROLES
+
+### Operador
+
+* carga estados
+* asignado a un sector
+
+### Supervisor
+
+* visualiza información
+* acceso completo
+
+---
+
+## 📺 MONITORES (CLAVE DEL SISTEMA)
+
+No son usuarios tradicionales.
+
+Se implementan como:
+
+> “Dashboards accesibles por URL con token”
+
+Ejemplo:
+
+```
+/monitor/{token}
+```
+
+---
+
+## 🎯 TIPOS DE DASHBOARD
+
+1. General (todos los sectores)
+2. Por sector
+3. Administrativo (más detalle)
+
+---
+
+## 👤 USUARIOS Y SECTORES
+
+Un usuario puede estar asignado a uno o varios sectores.
+
+Esto se implementa mediante una relación:
+
+Usuario ↔ Sector (muchos a muchos)
+
+Tabla:
+
+UsuarioSector
+
+* UsuarioId
+* SectorId
+
+---
+
+## ⚡ FLUJO DEL OPERARIO (ACTUALIZADO 7/5/2026)
+
+1. Login
+2. Selecciona sector (si tiene más de uno)
+3. Completa hasta 3 campos
+4. Presiona estado
+5. El sistema guarda automáticamente
+
+Optimización:
+
+* recordar último sector usado
+* permitir cambio rápido de sector
+
+Tiempo objetivo: **2–3 segundos**
+---
+
+## 🧩 CAMPOS CONFIGURABLES (DECISIÓN CLAVE)
+
+Cada sector puede definir:
+
+> Hasta 3 campos configurables
+
+Tipos:
+
+* Texto corto
+* Número
+* Lista (opcional)
+
+Ejemplos:
+
+* Orden
+* Lote
+* Cantidad
+* Máquina
+
+---
+
+## ⚠️ PRINCIPIO CRÍTICO
+
+> “Primero velocidad, después información”
+
+---
+
+## 🗄️ MODELO DE DATOS (SIMPLIFICADO)
+
+### Sector
+
+* Nombre
+* Orden (posición visual)
+* Campo1Nombre / Tipo
+* Campo2Nombre / Tipo
+* Campo3Nombre / Tipo
+
+---
+
+### Estado
+
+* Nombre
+* Color (verde / amarillo / rojo)
+
+---
+
+### Evento
+
+* SectorId
+* EstadoId
+* UsuarioId
+* FechaHora
+* Campo1Valor
+* Campo2Valor
+* Campo3Valor
+
+---
+
+### EstadoActual
+
+* SectorId
+* EstadoId
+* FechaHora
+* Campo1Valor
+* Campo2Valor
+* Campo3Valor
+
+---
+
+### Dashboard
+
+* Nombre
+* Tipo (General / Sector)
+* SectorId (opcional)
+* Token (acceso público)
+* Activo
+
+---
+
+## 🔄 FLUJO DE DATOS
+
+Al cambiar estado:
+
+1. INSERT en Evento
+2. UPDATE en EstadoActual
+
+---
+
+## 📺 DISEÑO DE PANTALLAS
+
+### Reglas:
+
+* sin scroll
+* texto grande
+* colores claros
+* visible a distancia
+* auto-refresh (polling)
+
+---
+
+## 🧠 POSICIONAMIENTO DEL PRODUCTO
+
+LiteState es:
+
+> “Una plataforma de visualización operativa en tiempo real para espacios físicos”
+
+---
+
+## 🔥 PROPUESTA DE VALOR
+
+* “Dar vida a monitores apagados”
+* “Ver qué está pasando ahora sin preguntar”
+* “Mejorar visibilidad operativa en planta”
+
+---
+
+## ⚙️ STACK TÉCNICO
+
+* ASP.NET Core 6 (LTS)
+* SQL Server 2016
+* IIS (hosting compartido)
+* Arquitectura en capas
+* Polling (no tiempo real complejo)
+
+---
+
+## 🚫 LO QUE EVITAMOS
+
+* sistemas complejos de órdenes
+* formularios largos
+* sobreconfiguración
+* dependencias externas (Azure)
+
+---
+
+## 🎯 FACTOR CRÍTICO DE ÉXITO
+
+> “Actualizar estado debe ser más fácil que explicarlo verbalmente”
+
+---
+
+## 🚀 ESCALABILIDAD FUTURA
+
+* métricas
+* reportes
+* alertas
+* más campos dinámicos
+* dashboards avanzados
+
+(SIN romper la base actual)
+
+*******************************************************************
+
+# 📺 LITESTATE — CONCEPTO VISUAL Y DASHBOARDS (AGREGADO AL CONTEXTO)
+
+## 🎯 OBJETIVO DEL DASHBOARD TV
+
+El dashboard principal debe responder en menos de 3 segundos:
+
+> “¿Qué está pasando ahora?”
+
+Está diseñado para:
+
+* TVs de 32”
+* monitores industriales
+* oficinas
+* pasillos
+* recepción
+
+---
+
+## 🧠 PRINCIPIOS VISUALES
+
+### Reglas fundamentales
+
+* sin scroll
+* texto grande
+* alto contraste
+* visible a distancia
+* pocos elementos
+* actualización automática
+* sin interacción en TVs
+
+---
+
+## 📺 ESTRUCTURA DEL DASHBOARD PRINCIPAL
+
+La pantalla se divide en:
+
+### 1. HEADER SUPERIOR
+
+Contiene:
+
+* logo empresa
+* nombre dashboard
+* fecha/hora
+* última actualización
+
+Ejemplo:
+
+```plaintext
+LITESTATE | PRODUCCIÓN GENERAL                  14:35
+Última actualización: hace 5 segundos
+```
+
+---
+
+### 2. GRID PRINCIPAL
+
+Contiene tarjetas de sectores.
+
+Cada tarjeta representa:
+
+> el estado actual de un sector.
+
+---
+
+## 🧱 TARJETA DE SECTOR
+
+Cada tarjeta debe mostrar:
+
+### Nombre del sector
+
+Ejemplo:
+
+```plaintext
+PRODUCCIÓN LÍNEA 1
+```
+
+---
+
+### Estado actual (visual dominante)
+
+Ejemplos:
+
+```plaintext
+🟢 PRODUCIENDO
+🟡 ESPERANDO
+🔴 DETENIDO
+⚫ FINALIZADO
+```
+
+---
+
+### Datos operativos
+
+Ejemplo:
+
+```plaintext
+Orden: 15422
+Lote: A-55
+Cantidad: 1200
+```
+
+---
+
+### Tiempo desde última actualización
+
+Ejemplo:
+
+```plaintext
+Actualizado hace 2 min
+```
+
+---
+
+## 🎨 COLORES DE ESTADO
+
+### 🟢 Verde
+
+Operando normalmente
+
+### 🟡 Amarillo
+
+Espera / transición
+
+### 🔴 Rojo
+
+Problema / detenido
+
+### ⚫ Gris / oscuro
+
+Finalizado
+
+El estado FINALIZADO:
+
+* permanece visible temporalmente
+* se muestra atenuado
+* tiene menor protagonismo visual
+
+---
+
+## ⏳ COMPORTAMIENTO DE FINALIZADOS
+
+Cuando una operación termina:
+
+1. el operador marca estado FINALIZADO
+2. el dashboard mantiene visible el sector
+3. visualmente se atenúa
+4. luego de un tiempo configurable (15–30 min):
+
+   * puede ocultarse automáticamente
+   * o moverse a actividad reciente
+
+---
+
+## 🔥 ACTIVIDAD RECIENTE (FUTURO)
+
+Posible sección inferior:
+
+```plaintext
+ÚLTIMOS FINALIZADOS
+- Orden 15422
+- Lote A-55
+- Hace 3 min
+```
+
+Objetivo:
+
+* dar sensación de operación viva
+* mostrar continuidad de trabajo
+
+---
+
+## 📐 DISTRIBUCIÓN VISUAL
+
+### Hasta 6 sectores
+
+Grid 2x3
+
+### Hasta 8 sectores
+
+Grid 2x4
+
+Futuro:
+
+* paginación automática
+* rotación de pantallas
+
+---
+
+## ⚡ REFRESH
+
+Tecnología inicial:
+
+* polling AJAX simple
+
+Frecuencia:
+
+* cada 5 segundos
+
+---
+
+## 🧠 FILOSOFÍA VISUAL
+
+El sistema NO debe sentirse como:
+
+* un ERP
+* una planilla
+* un panel administrativo
+
+Debe sentirse como:
+
+> “La operación viva de la empresa.”
+
+---
+
+## 🔥 PROPUESTA VISUAL DE VALOR
+
+LiteState busca:
+
+* dar vida a monitores apagados
+* mostrar el estado operativo en tiempo real
+* reducir preguntas operativas
+* mejorar visibilidad y control en planta
+* profesionalizar la imagen operativa
+
+---
+
+## ⚠️ REGLA CRÍTICA
+
+> “Cada pantalla debe responder una sola pregunta claramente.”
+
+Ejemplos:
+
+* ¿Qué está pasando ahora?
+* ¿Qué está haciendo este sector?
+* ¿Qué se terminó recientemente?
+
+Nunca mezclar demasiada información.
+
+*******************************************************************
+
+# 👷 LITESTATE — PANTALLA OPERARIO (AGREGADO AL CONTEXTO)
+
+## 🎯 OBJETIVO
+
+La pantalla del operario debe permitir:
+
+> actualizar un estado operativo en 2–3 segundos.
+
+El sistema debe priorizar:
+
+* velocidad
+* simplicidad
+* uso táctil
+* mínima escritura
+
+---
+
+## ⚠️ PRINCIPIO CRÍTICO
+
+> “La carga debe ser más rápida que comunicarlo verbalmente.”
+
+---
+
+## 📱 CONTEXTO DE USO
+
+La pantalla será utilizada en:
+
+* celulares
+* tablets
+* notebooks
+* PCs industriales
+
+En entornos:
+
+* ruidosos
+* operativos
+* con usuarios no técnicos
+
+---
+
+## 🧱 ESTRUCTURA DE LA PANTALLA
+
+La pantalla operario se divide en 4 zonas:
+
+---
+
+## 🔷 1. HEADER SUPERIOR
+
+Muestra:
+
+* nombre usuario
+* sector actual
+* selector rápido de sector
+
+Ejemplo:
+
+```plaintext id="v7n5ta"
+Juan Pérez
+Sector: Producción Línea 1 ▼
+```
+
+---
+
+## 👤 USUARIO MULTI-SECTOR
+
+Un usuario puede tener asignados múltiples sectores.
+
+La pantalla debe permitir:
+
+* cambiar rápidamente entre sectores
+* recordar el último sector utilizado
+
+---
+
+## 🔷 2. CAMPOS OPERATIVOS
+
+Cada sector puede definir hasta 3 campos configurables.
+
+Tipos:
+
+* texto corto
+* número
+* lista
+
+Ejemplo:
+
+```plaintext id="ibn7kx"
+Orden
+[____________]
+
+Lote
+[____________]
+
+Cantidad
+[____________]
+```
+
+---
+
+## ⚡ OPTIMIZACIÓN DE CARGA
+
+Objetivo:
+
+* minimizar escritura manual
+
+Posibles optimizaciones:
+
+* recordar últimos valores
+* reutilización rápida
+* listas desplegables
+* futuros lectores QR/código barras
+
+---
+
+## 🔷 3. BOTONES DE ESTADO
+
+Los estados son el núcleo de la interacción.
+
+Diseño:
+
+* botones grandes
+* táctiles
+* coloridos
+* muy visibles
+
+Ejemplo:
+
+```plaintext id="l4t9ks"
+🟢 PRODUCIENDO
+
+🟡 ESPERANDO
+
+🔴 PROBLEMA
+
+⚫ FINALIZADO
+```
+
+---
+
+## ⚡ COMPORTAMIENTO
+
+Al presionar un estado:
+
+1. se validan campos mínimos
+2. se guarda automáticamente
+3. se actualiza EstadoActual
+4. se inserta Evento histórico
+5. se muestra confirmación visual
+
+---
+
+## ⚠️ REGLA IMPORTANTE
+
+NO existe botón “Guardar”.
+
+> El botón de estado ES la acción de guardar.
+
+---
+
+## 🔷 4. FEEDBACK VISUAL
+
+Después de guardar:
+
+```plaintext id="o3r2zm"
+✅ Estado actualizado correctamente
+Hace 2 segundos
+```
+
+Objetivo:
+
+* dar seguridad al operario
+* evitar dudas de guardado
+
+---
+
+## 📱 FILOSOFÍA UX
+
+La pantalla NO debe sentirse:
+
+* administrativa
+* pesada
+* técnica
+
+Debe sentirse:
+
+> rápida, directa y operacional.
+
+---
+
+## 🚫 COSAS A EVITAR
+
+* formularios largos
+* múltiples pasos
+* navegación compleja
+* exceso de validaciones
+* exceso de escritura manual
+
+---
+
+## 🎨 DISEÑO VISUAL
+
+### Reglas:
+
+* tipografía grande
+* elementos táctiles
+* espaciado amplio
+* alto contraste
+* diseño mobile-first
+
+---
+
+## 🔥 ESTADOS SOPORTADOS
+
+### 🟢 Produciendo
+
+Operación normal
+
+### 🟡 Esperando
+
+Pausa / transición
+
+### 🔴 Problema
+
+Bloqueo / falla
+
+### ⚫ Finalizado
+
+Proceso completado
+
+---
+
+## ⏳ COMPORTAMIENTO DE FINALIZADO
+
+Cuando un proceso termina:
+
+* el operador marca FINALIZADO
+* el dashboard mantiene visible temporalmente el sector
+* visualmente se atenúa
+* luego puede ocultarse automáticamente
+
+---
+
+## 🔄 RELACIÓN CON DASHBOARDS
+
+Toda actualización:
+
+* impacta en tiempo real visual
+* actualiza TVs y dashboards
+* alimenta histórico operativo
+
+---
+
+## 🎯 OBJETIVO FINAL
+
+Operario:
+
+* casi no escribe
+* no navega
+* actualiza rápido
+
+Empresa:
+
+* obtiene visibilidad operativa en tiempo real
+
+Sistema:
+
+* se siente vivo y simple de usar
+
+*******************************************************************
+
+# 🧱 LITESTATE — ARQUITECTURA FUNCIONAL DE MÓDULOS (AGREGADO AL CONTEXTO)
+
+## 🎯 OBJETIVO
+
+Organizar LiteState en módulos funcionales claros para:
+
+* evitar caos estructural
+* separar responsabilidades
+* facilitar escalabilidad
+* mantener simplicidad operativa
+
+---
+
+# 🧩 MÓDULOS PRINCIPALES
+
+LiteState se divide en 5 módulos funcionales:
+
+1. Operación
+2. Monitores
+3. Administración
+4. Histórico
+5. Sistema
+
+---
+
+# 👷 1. MÓDULO OPERACIÓN
+
+## Objetivo
+
+Permitir actualización rápida de estados operativos.
+
+## Usuarios
+
+* operarios
+* supervisores de línea
+
+## Responsabilidades
+
+* login
+* selección de sector
+* carga de estados
+* carga de campos operativos
+* actualización rápida
+
+## Pantallas
+
+* Login
+* Selección de sector
+* Pantalla operario
+
+## Prioridad
+
+> máxima velocidad y simplicidad
+
+---
+
+# 📺 2. MÓDULO MONITORES
+
+## Objetivo
+
+Mostrar información operativa en tiempo real.
+
+## Usuarios
+
+* TVs
+* monitores industriales
+* oficinas
+* recepción
+* supervisores
+
+## Responsabilidades
+
+* dashboards en tiempo real
+* acceso por token
+* actualización automática
+* visualización clara y legible
+
+## Tipos de dashboard
+
+* General
+* Sectorial
+* Administrativo visual
+
+## Prioridad
+
+> legibilidad, estabilidad y claridad visual
+
+---
+
+# 🧑‍💼 3. MÓDULO ADMINISTRACIÓN
+
+## Objetivo
+
+Configurar el sistema y estructura operativa.
+
+## Usuarios
+
+* administradores
+* dueños
+* supervisores generales
+
+## Responsabilidades
+
+### Usuarios
+
+* crear usuarios
+* asignar roles
+* asignar sectores
+
+### Sectores
+
+* crear sectores
+* definir orden visual
+* configurar campos dinámicos
+
+### Estados
+
+* crear estados
+* colores
+* orden visual
+
+### Dashboards
+
+* generar dashboards
+* generar tokens
+* asignar sectores
+
+## Prioridad
+
+> configuración simple y flexible
+
+---
+
+# 📊 4. MÓDULO HISTÓRICO
+
+## Objetivo
+
+Permitir trazabilidad operativa.
+
+## Responsabilidades
+
+* consultar eventos históricos
+* filtros por:
+
+  * sector
+  * usuario
+  * estado
+  * fecha
+
+## Filosofía inicial
+
+* simple
+* liviano
+* sin analytics complejos
+
+## Escalabilidad futura
+
+* KPIs
+* métricas
+* tiempos operativos
+* productividad
+
+---
+
+# ⚙️ 5. MÓDULO SISTEMA
+
+## Objetivo
+
+Soporte técnico y configuración general.
+
+## Responsabilidades
+
+### Empresa
+
+* branding
+* logo
+* configuración empresa
+
+### Seguridad
+
+* autenticación
+* permisos
+
+### Configuración
+
+* refresh dashboards
+* tiempo de visibilidad de finalizados
+* configuraciones generales
+
+---
+
+# 🔄 RELACIÓN ENTRE MÓDULOS
+
+Operación:
+
+* genera información
+
+Monitores:
+
+* muestran información
+
+Histórico:
+
+* consulta información histórica
+
+Administración:
+
+* configura estructura
+
+Sistema:
+
+* sostiene plataforma y seguridad
+
+---
+
+# 📐 ESTRUCTURA FUNCIONAL GENERAL
+
+```plaintext id="h9l0t2"
+LiteState
+│
+├── Operación
+│   ├── Login
+│   ├── Sectores
+│   └── Estados
+│
+├── Monitores
+│   ├── General
+│   ├── Sectorial
+│   └── Administrativo
+│
+├── Administración
+│   ├── Usuarios
+│   ├── Sectores
+│   ├── Estados
+│   └── Dashboards
+│
+├── Histórico
+│   └── Eventos
+│
+└── Sistema
+    ├── Empresa
+    └── Seguridad
+```
+
+---
+
+# 🧠 ESTRUCTURA PENSADA PARA ASP.NET CORE MVC
+
+## Controllers
+
+```plaintext id="e2b9d7"
+/Controllers
+    /Operacion
+    /Monitor
+    /Admin
+    /Historico
+```
+
+---
+
+## Services
+
+```plaintext id="ps4v0q"
+/Services
+    /Operacion
+    /Monitor
+    /Admin
+```
+
+---
+
+## Views
+
+```plaintext id="y7d2wu"
+/Views
+    /Operacion
+    /Monitor
+    /Admin
+```
+
+---
+
+# ⚠️ REGLA IMPORTANTE
+
+Los dashboards y monitores:
+
+* deben ser ultra livianos
+* independientes
+* rápidos
+* desacoplados de administración
+
+---
+
+# 🔥 PRIORIDAD REAL DE DESARROLLO
+
+## Fase 1
+
+Operación
+
+## Fase 2
+
+Dashboard TV
+
+## Fase 3
+
+Administración básica
+
+## Fase 4
+
+Histórico
+
+## Fase 5
+
+SaaS / multiempresa avanzado
+
+---
+
+# 🎯 OBJETIVO FINAL
+
+LiteState no debe sentirse como:
+
+* un ERP
+* un panel administrativo
+* una planilla compleja
+
+Debe sentirse como:
+
+> “La operación viva y visible de la empresa.”
+
+*******************************************************************
+
+# 🏗️ LITESTATE — ARQUITECTURA TÉCNICA ASP.NET CORE (PUNTOS CLAVE)
+
+## 🎯 OBJETIVO TÉCNICO
+
+Construir LiteState como:
+
+* sistema modular
+* mantenible
+* escalable
+* compatible con hosting compartido
+* optimizado para IIS + SQL Server
+
+---
+
+# ⚙️ STACK DEFINIDO
+
+* ASP.NET Core 6 MVC
+* SQL Server 2016
+* IIS
+* Hosting Windows compartido (DonWeb)
+* Entity Framework Core
+* Bootstrap 5
+* JavaScript simple (AJAX polling)
+
+---
+
+# 🧠 DECISIÓN ARQUITECTÓNICA PRINCIPAL
+
+## ✅ Monolito modular
+
+Se evita:
+
+* microservicios
+* CQRS complejo
+* arquitecturas distribuidas
+
+Objetivo:
+
+* simplicidad
+* velocidad de desarrollo
+* menor costo
+* compatibilidad con hosting económico
+
+---
+
+# 🧱 ESTRUCTURA DE SOLUCIÓN
+
+```plaintext id="j7t9db"
+LiteState.sln
+
+/src
+
+    LiteState.Web
+    LiteState.Application
+    LiteState.Domain
+    LiteState.Infrastructure
+```
+
+---
+
+# 🌐 LiteState.Web
+
+Responsabilidad:
+
+* Controllers
+* Views
+* autenticación
+* ViewModels
+* UI
+* wwwroot
+
+Tecnología:
+
+* ASP.NET Core MVC
+* Razor Views
+
+---
+
+# 🧠 LiteState.Application
+
+Responsabilidad:
+
+* lógica de negocio
+* Services
+* DTOs
+* Interfaces
+* reglas funcionales
+
+NO contiene:
+
+* SQL
+* EF Core
+* UI
+
+---
+
+# 🏛️ LiteState.Domain
+
+Responsabilidad:
+
+* entidades
+* enums
+* núcleo del negocio
+
+Entidades principales:
+
+* Empresa
+* Usuario
+* Sector
+* Estado
+* Evento
+* EstadoActual
+* Dashboard
+
+---
+
+# 🗄️ LiteState.Infrastructure
+
+Responsabilidad:
+
+* EF Core
+* DbContext
+* repositories
+* Identity
+* acceso SQL Server
+* infraestructura técnica
+
+---
+
+# 🔄 FLUJO ARQUITECTÓNICO
+
+```plaintext id="x0t5qf"
+Request
+↓
+Controller
+↓
+Application Service
+↓
+Infrastructure
+↓
+SQL Server
+```
+
+---
+
+# 🗄️ BASE DE DATOS
+
+SQL Server 2016
+
+Tablas principales:
+
+* Empresas
+* Usuarios
+* Sectores
+* UsuarioSectores
+* Estados
+* Eventos
+* EstadoActual
+* Dashboards
+
+---
+
+# ⚡ DECISIÓN CLAVE
+
+## EstadoActual es tabla física
+
+Objetivo:
+
+* dashboards ultra rápidos
+* evitar queries pesadas
+* optimizar hosting compartido
+
+---
+
+# 👤 USUARIOS Y SEGURIDAD
+
+Autenticación:
+
+* ASP.NET Core Identity simple
+
+Roles:
+
+* Admin
+* Supervisor
+* Operador
+
+---
+
+# 📺 MONITORES
+
+No usan login.
+
+Acceso:
+
+```plaintext id="h4s8mv"
+/monitor/{token}
+```
+
+---
+
+# ⚡ TIEMPO REAL
+
+Tecnología:
+
+* AJAX polling simple
+
+Frecuencia:
+
+* cada 5 segundos
+
+---
+
+# ❌ TECNOLOGÍAS EVITADAS INICIALMENTE
+
+* SignalR
+* WebSockets
+* Redis
+* React
+* Angular
+* Blazor WASM
+
+Motivo:
+
+* simplicidad
+* hosting compartido
+* menor consumo
+
+---
+
+# 🎨 FRONTEND
+
+* Razor Views
+* Bootstrap 5
+* JS vanilla simple
+
+Objetivo:
+
+* rapidez
+* estabilidad
+* bajo consumo
+
+---
+
+# 📁 ESTRUCTURA WEB
+
+```plaintext id="n6d1wq"
+/Controllers
+    /Admin
+    /Operacion
+    /Monitor
+    /Historico
+
+/Views
+    /Admin
+    /Operacion
+    /Monitor
+    /Historico
+
+/Services
+
+/Data
+
+/wwwroot
+```
+
+---
+
+# 🔐 SEGURIDAD
+
+* HTTPS obligatorio
+* validaciones server-side
+* credenciales en appsettings.Production.json
+
+---
+
+# 🚀 DEPLOY
+
+Tipo:
+
+* Framework-dependent deployment
+
+Runtime esperado:
+
+* .NET 6.0.x
+
+Publicación:
+
+```plaintext id="h1x5cz"
+win-x64
+```
+
+Compatible con:
+
+* IIS
+* DonWeb Windows Hosting
+
+---
+
+# 🔥 PRIORIDADES TÉCNICAS
+
+## Dashboard
+
+* ultra liviano
+* render rápido
+* pocas consultas
+
+## Operario
+
+* respuesta inmediata
+* mínima navegación
+* mínima escritura
+
+---
+
+# 🧠 FILOSOFÍA TÉCNICA
+
+LiteState debe:
+
+* sentirse rápido
+* ser fácil de mantener
+* crecer sin rehacer arquitectura
+
+---
+
+# 🚀 ESCALABILIDAD FUTURA
+
+La arquitectura permite migrar más adelante a:
+
+* APIs
+* SignalR
+* React
+* Azure
+* Docker
+* multi-servidor
+
+SIN romper la base actual.
+
+
+*******************************************************************
+
+# 🧩 LITESTATE — MODELO DE ENTIDADES Y RELACIONES (AGREGADO AL CONTEXTO)
+
+## 🎯 OBJETIVO DEL MODELO
+
+Diseñar un modelo:
+
+* simple
+* escalable
+* optimizado para dashboards
+* compatible con EF Core + SQL Server
+* preparado para multiempresa futura
+
+---
+
+# 🏢 EMPRESA
+
+Representa una organización/cliente del sistema.
+
+## Propósito
+
+Preparar LiteState para SaaS y separación de datos.
+
+## Relaciones
+
+Empresa:
+
+* tiene muchos Usuarios
+* tiene muchos Sectores
+* tiene muchos Estados
+* tiene muchos Dashboards
+
+---
+
+## Campos principales
+
+```csharp id="5z2jvq"
+Id
+Nombre
+LogoUrl
+Activa
+```
+
+---
+
+# 👤 USUARIO
+
+Hereda de:
+
+```csharp id="r8m4nb"
+IdentityUser<int>
+```
+
+## Propósito
+
+Usuarios operativos y administrativos.
+
+## Relaciones
+
+Usuario:
+
+* pertenece a una Empresa
+* tiene muchos UsuarioSectores
+* puede generar muchos Eventos
+
+---
+
+## Campos principales
+
+```csharp id="uq5s3f"
+Id
+NombreCompleto
+EmpresaId
+Activo
+```
+
+---
+
+# 🏭 SECTOR
+
+Representa una línea, área o sector operativo.
+
+## Propósito
+
+Unidad principal de monitoreo.
+
+## Relaciones
+
+Sector:
+
+* pertenece a Empresa
+* tiene muchos Eventos
+* tiene un EstadoActual
+* puede estar asignado a muchos Usuarios
+* puede pertenecer a Dashboards
+
+---
+
+## Campos principales
+
+```csharp id="y6v3ht"
+Id
+EmpresaId
+Nombre
+Orden
+Activo
+```
+
+---
+
+## Campos configurables
+
+Cada sector puede definir hasta 3 campos:
+
+```csharp id="x4n9lp"
+Campo1Nombre
+Campo1Tipo
+
+Campo2Nombre
+Campo2Tipo
+
+Campo3Nombre
+Campo3Tipo
+```
+
+---
+
+# 🔗 USUARIOSECTOR
+
+Tabla intermedia muchos-a-muchos.
+
+## Propósito
+
+Permitir que:
+
+* un usuario opere varios sectores
+* un sector tenga varios usuarios
+
+---
+
+## Relaciones
+
+```plaintext id="u7r1wd"
+Usuario ↔ UsuarioSector ↔ Sector
+```
+
+---
+
+## Campos principales
+
+```csharp id="s3m7fo"
+UsuarioId
+SectorId
+```
+
+---
+
+# 🚦 ESTADO
+
+Representa estados operativos configurables.
+
+## Ejemplos
+
+* Produciendo
+* Esperando
+* Problema
+* Finalizado
+
+---
+
+## Relaciones
+
+Estado:
+
+* pertenece a Empresa
+* tiene muchos Eventos
+* puede existir en EstadoActual
+
+---
+
+## Campos principales
+
+```csharp id="q1x8zr"
+Id
+EmpresaId
+Nombre
+ColorHex
+Orden
+Activo
+EsFinalizado
+```
+
+---
+
+# 📝 EVENTO
+
+Representa el histórico operativo.
+
+## Propósito
+
+Guardar todos los cambios de estado.
+
+---
+
+## Filosofía
+
+Evento:
+
+* solo INSERT
+* nunca UPDATE
+* nunca DELETE lógico operativo
+
+---
+
+## Relaciones
+
+Evento:
+
+* pertenece a Empresa
+* pertenece a Sector
+* pertenece a Estado
+* pertenece a Usuario
+
+---
+
+## Campos principales
+
+```csharp id="m8t4qp"
+Id
+EmpresaId
+SectorId
+EstadoId
+UsuarioId
+FechaHora
+```
+
+---
+
+## Valores operativos
+
+```csharp id="c5n1yw"
+Campo1Valor
+Campo2Valor
+Campo3Valor
+```
+
+---
+
+# ⚡ ESTADOACTUAL
+
+Tabla optimizada para dashboards.
+
+## Propósito
+
+Evitar consultas pesadas al histórico.
+
+---
+
+## Filosofía
+
+Existe:
+
+* un único EstadoActual por Sector
+
+Comportamiento:
+
+* UPDATE cuando cambia estado
+
+---
+
+## Relaciones
+
+EstadoActual:
+
+* pertenece a Sector
+* pertenece a Estado
+* pertenece a Usuario
+
+---
+
+## Campos principales
+
+```csharp id="r4k2ye"
+SectorId
+EstadoId
+UsuarioId
+FechaHora
+```
+
+---
+
+## Valores operativos
+
+```csharp id="g7w3nm"
+Campo1Valor
+Campo2Valor
+Campo3Valor
+```
+
+---
+
+# 📺 DASHBOARD
+
+Representa pantallas y monitores.
+
+## Propósito
+
+Visualización operativa en TVs y oficinas.
+
+---
+
+## Relaciones
+
+Dashboard:
+
+* pertenece a Empresa
+* opcionalmente pertenece a un Sector
+
+---
+
+## Tipos soportados
+
+* General
+* Sectorial
+* Administrativo
+
+---
+
+## Acceso
+
+```plaintext id="p9f6ra"
+/monitor/{token}
+```
+
+---
+
+## Campos principales
+
+```csharp id="o3z8kc"
+Id
+EmpresaId
+Nombre
+Token
+Tipo
+SectorId
+Activo
+```
+
+---
+
+# 🔄 RELACIONES GENERALES
+
+```plaintext id="k6v4tj"
+Empresa
+ ├── Usuarios
+ ├── Sectores
+ ├── Estados
+ └── Dashboards
+
+Usuario
+ ├── UsuarioSectores
+ └── Eventos
+
+Sector
+ ├── UsuarioSectores
+ ├── Eventos
+ ├── EstadoActual
+ └── Dashboards
+
+Estado
+ ├── Eventos
+ └── EstadoActual
+
+Evento
+ ├── Usuario
+ ├── Sector
+ └── Estado
+```
+
+---
+
+# ⚡ OPTIMIZACIONES IMPORTANTES
+
+## EstadoActual
+
+Tabla física optimizada para:
+
+* dashboards rápidos
+* menos carga SQL
+* hosting compartido
+
+---
+
+## Evento
+
+Histórico append-only para:
+
+* trazabilidad
+* auditoría
+* métricas futuras
+
+---
+
+# 🧠 DECISIONES ARQUITECTÓNICAS CLAVE
+
+✔ máximo 3 campos configurables
+✔ usuarios multi-sector
+✔ dashboards desacoplados
+✔ acceso monitor vía token
+✔ histórico separado de estado vivo
+✔ multiempresa preparada desde el inicio
+
+---
+
+# 🎯 FILOSOFÍA GENERAL DEL MODELO
+
+El modelo prioriza:
+
+* simplicidad
+* velocidad operativa
+* claridad
+* escalabilidad gradual
+
+Evita:
+
+* estructuras excesivamente genéricas
+* sobreingeniería
+* formularios complejos
+* dependencias innecesarias
+
+
+*******************************************************************
+
+📺 ROADMAP REAL RECOMENDADO
+FASE 1 — OPERACIÓN REAL
+(AHORA)
+
+✔ AJAX
+✔ POST
+✔ feedback
+✔ validaciones
+
+FASE 2 — PERSISTENCIA
+
+✔ EF Core
+✔ DbContext
+✔ SQL Server
+✔ migraciones
+
+FASE 3 — DASHBOARD VIVO
+
+✔ endpoint monitor
+✔ polling cada 5s
+✔ tarjetas dinámicas
+✔ estados finalizados atenuados
+
+FASE 4 — ADMIN
+
+✔ ABM Sectores
+✔ ABM Estados
+✔ Usuarios
+✔ Dashboards
+
+FASE 5 — HISTÓRICO
+
+✔ filtros
+✔ búsqueda
+✔ trazabilidad
+
+*******************************************************************
+
+*******************************************************************
+
+*******************************************************************

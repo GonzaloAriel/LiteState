@@ -1,0 +1,99 @@
+# 🧭 LITESTATE — PRÓXIMOS PASOS ESTRATÉGICOS
+
+## 🎯 ETAPA ACTUAL
+
+LiteState ya tiene definidos:
+
+* visión del producto
+* UX principal
+* dashboards
+* arquitectura funcional
+* arquitectura técnica
+* modelo de entidades
+
+El siguiente objetivo es transformar la idea sólida en un sistema construible y coherente.
+
+---
+
+# 🥇 1. CASOS DE USO REALES
+
+Objetivo:
+
+* validar flujos reales
+* detectar problemas antes del código
+* mejorar UX
+* consolidar arquitectura
+
+Casos prioritarios:
+
+* Operario actualiza estado
+* Operario finaliza proceso
+* Cambio rápido entre sectores
+* Admin crea sector
+* Admin configura campos
+* Admin crea dashboard
+* TV muestra estados en tiempo real
+
+---
+
+# 🥈 2. DEFINIR NAVEGACIÓN COMPLETA
+
+Objetivo:
+
+* definir pantallas reales
+* conexiones entre módulos
+* experiencia por rol
+
+Ejemplo:
+
+```plaintext id="q4m8nc"
+Login
+ ├── Operación
+ ├── Administración
+ ├── Histórico
+ └── Monitores
+```
+
+---
+
+# 🥉 3. DEFINIR DTOs Y VIEWMODELS
+
+Objetivo:
+
+* definir qué datos necesita cada pantalla
+* preparar Controllers y Services
+* separar UI de entidades
+
+---
+
+# 🏗️ 4. IMPLEMENTACIÓN REAL
+
+Recién después:
+
+* crear solución ASP.NET Core
+* DbContext
+* Identity
+* Controllers
+* Services
+* EF Core
+
+---
+
+# 🧠 FILOSOFÍA DE DESARROLLO
+
+LiteState debe construirse:
+
+* validando primero los flujos reales
+* manteniendo simplicidad
+* evitando retrabajo
+* priorizando UX operativa
+
+---
+
+# 🎯 PRIORIDAD ACTUAL
+
+El próximo paso correcto es:
+
+> diseñar casos de uso reales y completos de LiteState
+
+Antes de comenzar implementación técnica.

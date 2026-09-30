@@ -1,0 +1,237 @@
+# 📺 LITESTATE — CONCEPTO VISUAL Y DASHBOARDS (AGREGADO AL CONTEXTO)
+
+## 🎯 OBJETIVO DEL DASHBOARD TV
+
+El dashboard principal debe responder en menos de 3 segundos:
+
+> “¿Qué está pasando ahora?”
+
+Está diseñado para:
+
+* TVs de 32”
+* monitores industriales
+* oficinas
+* pasillos
+* recepción
+
+---
+
+## 🧠 PRINCIPIOS VISUALES
+
+### Reglas fundamentales
+
+* sin scroll
+* texto grande
+* alto contraste
+* visible a distancia
+* pocos elementos
+* actualización automática
+* sin interacción en TVs
+
+---
+
+## 📺 ESTRUCTURA DEL DASHBOARD PRINCIPAL
+
+La pantalla se divide en:
+
+### 1. HEADER SUPERIOR
+
+Contiene:
+
+* logo empresa
+* nombre dashboard
+* fecha/hora
+* última actualización
+
+Ejemplo:
+
+```plaintext
+LITESTATE | PRODUCCIÓN GENERAL                  14:35
+Última actualización: hace 5 segundos
+```
+
+---
+
+### 2. GRID PRINCIPAL
+
+Contiene tarjetas de sectores.
+
+Cada tarjeta representa:
+
+> el estado actual de un sector.
+
+---
+
+## 🧱 TARJETA DE SECTOR
+
+Cada tarjeta debe mostrar:
+
+### Nombre del sector
+
+Ejemplo:
+
+```plaintext
+PRODUCCIÓN LÍNEA 1
+```
+
+---
+
+### Estado actual (visual dominante)
+
+Ejemplos:
+
+```plaintext
+🟢 PRODUCIENDO
+🟡 ESPERANDO
+🔴 DETENIDO
+⚫ FINALIZADO
+```
+
+---
+
+### Datos operativos
+
+Ejemplo:
+
+```plaintext
+Orden: 15422
+Lote: A-55
+Cantidad: 1200
+```
+
+---
+
+### Tiempo desde última actualización
+
+Ejemplo:
+
+```plaintext
+Actualizado hace 2 min
+```
+
+---
+
+## 🎨 COLORES DE ESTADO
+
+### 🟢 Verde
+
+Operando normalmente
+
+### 🟡 Amarillo
+
+Espera / transición
+
+### 🔴 Rojo
+
+Problema / detenido
+
+### ⚫ Gris / oscuro
+
+Finalizado
+
+El estado FINALIZADO:
+
+* permanece visible temporalmente
+* se muestra atenuado
+* tiene menor protagonismo visual
+
+---
+
+## ⏳ COMPORTAMIENTO DE FINALIZADOS
+
+Cuando una operación termina:
+
+1. el operador marca estado FINALIZADO
+2. el dashboard mantiene visible el sector
+3. visualmente se atenúa
+4. luego de un tiempo configurable (15–30 min):
+
+   * puede ocultarse automáticamente
+   * o moverse a actividad reciente
+
+---
+
+## 🔥 ACTIVIDAD RECIENTE (FUTURO)
+
+Posible sección inferior:
+
+```plaintext
+ÚLTIMOS FINALIZADOS
+- Orden 15422
+- Lote A-55
+- Hace 3 min
+```
+
+Objetivo:
+
+* dar sensación de operación viva
+* mostrar continuidad de trabajo
+
+---
+
+## 📐 DISTRIBUCIÓN VISUAL
+
+### Hasta 6 sectores
+
+Grid 2x3
+
+### Hasta 8 sectores
+
+Grid 2x4
+
+Futuro:
+
+* paginación automática
+* rotación de pantallas
+
+---
+
+## ⚡ REFRESH
+
+Tecnología inicial:
+
+* polling AJAX simple
+
+Frecuencia:
+
+* cada 5 segundos
+
+---
+
+## 🧠 FILOSOFÍA VISUAL
+
+El sistema NO debe sentirse como:
+
+* un ERP
+* una planilla
+* un panel administrativo
+
+Debe sentirse como:
+
+> “La operación viva de la empresa.”
+
+---
+
+## 🔥 PROPUESTA VISUAL DE VALOR
+
+LiteState busca:
+
+* dar vida a monitores apagados
+* mostrar el estado operativo en tiempo real
+* reducir preguntas operativas
+* mejorar visibilidad y control en planta
+* profesionalizar la imagen operativa
+
+---
+
+## ⚠️ REGLA CRÍTICA
+
+> “Cada pantalla debe responder una sola pregunta claramente.”
+
+Ejemplos:
+
+* ¿Qué está pasando ahora?
+* ¿Qué está haciendo este sector?
+* ¿Qué se terminó recientemente?
+
+Nunca mezclar demasiada información.

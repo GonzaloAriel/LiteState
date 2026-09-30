@@ -1,0 +1,105 @@
+﻿@model LiteState.Application.DTOs.Operacion.OperacionViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/ls-operacion.css" asp-append-version="true" />
+}
+
+<div class="ls-shell">
+    <div class="ls-topbar">
+        <a class="ls-topbar__brand" asp-controller="Home" asp-action="Index">LiteState</a>
+        <div class="ls-topbar__actions">
+            <span class="ls-text-secondary ls-hide-mobile">Operador: @Model.UsuarioNombre</span>
+        </div>
+    </div>
+
+    <main class="ls-content">
+        <div class="ls-page-header">
+            <div>
+                <h1 class="ls-page-header__title">Operación</h1>
+                <p class="ls-page-header__subtitle">Actualizá el estado de tu sector</p>
+            </div>
+
+            <select id="selector-sector" class="ls-select ls-sector-select" aria-label="Seleccionar sector">
+                @foreach (var sector in Model.Sectores)
+                {
+                    <option value="@sector.Id"
+                            selected="@(sector.Id == Model.SectorActualId)">
+                        @sector.Nombre
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div id="panel-operacion">
+            @await Html.PartialAsync("_OperacionPanel", Model)
+        </div>
+    </main>
+</div>
+
+@section Scripts {
+
+    <script>
+
+        // 1. Manejo del cambio de sector
+        document
+            .getElementById("selector-sector")
+            .addEventListener("change", async function () {
+
+                const sectorId = this.value;
+
+                const response = await fetch(`/Operacion/ObtenerPanelSector?sectorId=${sectorId}`);
+
+                const html = await response.text();
+
+                document.getElementById("panel-operacion").innerHTML = html;
+
+            });
+
+        // 2. Delegación de eventos para botones de estado (SPA liviano)
+        document.getElementById("panel-operacion").addEventListener("click", async function (e) {
+
+            const btn = e.target.closest(".estado-btn");
+            if (!btn) return;
+
+            const container = btn.closest("[data-sector-id]");
+            const sectorId = container.dataset.sectorId;
+            const estadoId = btn.dataset.estadoId;
+
+            const request = {
+                sectorId: parseInt(sectorId),
+                estadoId: parseInt(estadoId),
+                campo1Valor: document.getElementById("campo1").value,
+                campo2Valor: document.getElementById("campo2").value,
+                campo3Valor: document.getElementById("campo3").value
+            };
+
+            try {
+                const response = await fetch("/Operacion/ActualizarEstado", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(request)
+                });
+
+                const result = await response.json();
+                const mensaje = document.getElementById("mensaje-estado");
+
+                mensaje.className = "ls-feedback";
+
+                if (result.ok) {
+                    mensaje.classList.add("is-success");
+                    mensaje.innerHTML = "✅ " + result.message;
+                } else {
+                    mensaje.classList.add("is-error");
+                    mensaje.innerHTML = "❌ " + result.message;
+                }
+            } catch (err) {
+                console.error(err);
+                const mensaje = document.getElementById("mensaje-estado");
+                mensaje.className = "ls-feedback is-error";
+                mensaje.innerHTML = "❌ Error de conexión con el servidor";
+            }
+        });
+
+    </script>
+
+}

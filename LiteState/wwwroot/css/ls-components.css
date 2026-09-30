@@ -1,0 +1,224 @@
+/*
+   LiteState - Componentes del Design System
+   Vocabulario de clases ls-* reutilizables. Vive de los tokens (ls-tokens.css).
+   Si una clase nueva se necesita en 2 modulos, nace AQUI, no en la pagina.
+*/
+
+/* ---------- Botones ---------- */
+.ls-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--ls-radius);
+  border: 1px solid transparent;
+  font-family: var(--ls-font-sans);
+  font-size: var(--ls-text-base);
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+  white-space: nowrap;
+}
+
+.ls-btn:focus-visible {
+  outline: 2px solid var(--ls-accent);
+  outline-offset: 2px;
+}
+
+.ls-btn--primary {
+  background: var(--ls-accent);
+  color: #fff;
+}
+.ls-btn--primary:hover { background: var(--ls-accent-hover); color: #fff; }
+
+.ls-btn--ghost {
+  background: transparent;
+  color: var(--ls-text-primary);
+  border-color: var(--ls-border);
+}
+.ls-btn--ghost:hover { background: var(--ls-bg); }
+
+.ls-btn--danger {
+  background: var(--ls-danger);
+  color: #fff;
+}
+.ls-btn--danger:hover { background: #d32f2a; color: #fff; }
+
+.ls-btn--lg {
+  padding: 14px 24px;
+  font-size: var(--ls-text-lg);
+}
+
+.ls-btn--block { width: 100%; }
+
+/* ---------- Tarjetas ---------- */
+.ls-card {
+  background: var(--ls-surface);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--ls-radius);
+  box-shadow: var(--ls-shadow);
+}
+
+.ls-card__body { padding: var(--ls-space-4); }
+.ls-card__footer {
+  padding: var(--ls-space-3) var(--ls-space-4);
+  border-top: 1px solid var(--ls-border);
+}
+
+/* ---------- Inputs ---------- */
+.ls-input,
+.ls-select,
+.ls-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--ls-border);
+  border-radius: var(--ls-radius-sm);
+  font-family: var(--ls-font-sans);
+  font-size: var(--ls-text-base);
+  color: var(--ls-text-primary);
+  background: var(--ls-surface);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.ls-input:focus,
+.ls-select:focus,
+.ls-textarea:focus {
+  outline: none;
+  border-color: var(--ls-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+}
+
+.ls-field { margin-bottom: var(--ls-space-3); }
+.ls-field > label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--ls-text-sm);
+  font-weight: 600;
+  color: var(--ls-text-primary);
+}
+
+/* ---------- Badges / etiquetas de estado ---------- */
+.ls-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: var(--ls-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.ls-badge--success { background: var(--ls-success-bg); color: var(--ls-success); }
+.ls-badge--warning { background: var(--ls-warning-bg); color: #cc7a00; }
+.ls-badge--danger  { background: var(--ls-danger-bg);  color: var(--ls-danger); }
+.ls-badge--neutral { background: var(--ls-bg);         color: var(--ls-neutral); }
+
+/* ---------- Empty state ---------- */
+.ls-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--ls-space-6);
+  gap: var(--ls-space-3);
+  border: 1px dashed var(--ls-border);
+  border-radius: var(--ls-radius);
+  background: var(--ls-surface-muted);
+}
+
+.ls-empty__title {
+  font-size: var(--ls-text-lg);
+  font-weight: 700;
+  color: var(--ls-text-primary);
+  margin: 0;
+}
+
+.ls-empty__desc {
+  font-size: var(--ls-text-base);
+  color: var(--ls-text-secondary);
+  margin: 0;
+  max-width: 360px;
+}
+
+/* ---------- Tablas ---------- */
+.ls-table-wrap {
+  border: 1px solid var(--ls-border);
+  border-radius: var(--ls-radius);
+  overflow: hidden;
+  background: var(--ls-surface);
+}
+
+.ls-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ls-text-base);
+}
+
+.ls-table thead {
+  background: var(--ls-bg);
+  color: var(--ls-text-secondary);
+}
+
+.ls-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: var(--ls-text-xs);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-weight: 700;
+}
+
+.ls-table td {
+  padding: 12px 16px;
+  border-top: 1px solid var(--ls-border);
+  color: var(--ls-text-primary);
+}
+
+.ls-table tbody tr:hover { background: var(--ls-surface-muted); }
+
+/* ---------- PageHeader ---------- */
+.ls-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ls-space-4);
+  margin-bottom: var(--ls-space-5);
+}
+
+.ls-page-header__title {
+  font-size: var(--ls-text-3xl);
+  font-weight: 700;
+  color: var(--ls-text-primary);
+  margin: 0;
+}
+
+.ls-page-header__subtitle {
+  font-size: var(--ls-text-base);
+  color: var(--ls-text-secondary);
+  margin-top: 4px;
+}
+
+/* ---------- Utilidades ---------- */
+.ls-mt-16 { margin-top: var(--ls-space-3); }
+.ls-mt-24 { margin-top: var(--ls-space-4); }
+.ls-mb-16 { margin-bottom: var(--ls-space-3); }
+.ls-mb-24 { margin-bottom: var(--ls-space-4); }
+
+.ls-text-secondary { color: var(--ls-text-secondary); }
+.ls-text-success  { color: var(--ls-success); }
+.ls-text-warning  { color: var(--ls-warning); }
+.ls-text-danger   { color: var(--ls-danger); }
+
+.ls-fw-bold { font-weight: 700; }
+
+/* Responsive gestionado por el shell/layout, no por la vista */
+.ls-hide-mobile { display: none; }
+@media (min-width: 768px) {
+  .ls-hide-mobile { display: revert; }
+}

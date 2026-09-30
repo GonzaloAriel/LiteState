@@ -1,0 +1,32 @@
+@*
+    LiteState - SectorCard Component (Dashboard TV)
+    Resuelve: tarjeta de sector del dashboard TV. Muestra nombre, estado
+    (visual dominante), datos operativos y tiempo desde ultima actualizacion.
+    Los finalizados se renderizan atenuados (is-neutral).
+    Usage (dentro de .ls-tv-grid):
+    @Html.Partial("~/Views/Shared/Components/_SectorCard.cshtml",
+        new ViewDataDictionary {
+            { "Nombre", s.Nombre },
+            { "EstadoNombre", s.EstadoNombre },
+            { "Tone", "success" },   // success | warning | danger | neutral (del ColorHex del estado)
+            { "Campos", s.Fields },          // string multilinea o lista ya formateada
+            { "ActualizadoHace", s.ActualizadoHace } // texto "hace 2 min"
+        })
+*@
+@{
+    string nombre = ViewBag.Nombre ?? "";
+    string estadoNombre = ViewBag.EstadoNombre ?? "SIN ESTADO";
+    string tone = ViewBag.Tone ?? "neutral";
+    string campos = ViewBag.Campos ?? "";
+    string actualizadoHace = ViewBag.ActualizadoHace ?? "";
+}
+
+<div class="ls-tv-card is-@tone" data-sector-name="@nombre">
+    <div class="ls-tv-card__name">@nombre</div>
+    <div class="ls-tv-card__status">@estadoNombre</div>
+    @if (!string.IsNullOrEmpty(campos))
+    {
+        <div class="ls-tv-card__fields">@Html.Raw(campos)</div>
+    }
+    <div class="ls-tv-card__updated">@actualizadoHace</div>
+</div>

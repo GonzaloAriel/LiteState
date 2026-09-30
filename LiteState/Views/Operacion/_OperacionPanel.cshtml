@@ -1,0 +1,57 @@
+﻿@model LiteState.Application.DTOs.Operacion.OperacionViewModel
+
+<div class="ls-card" data-sector-id="@Model.SectorActualId">
+    <div class="ls-card__body">
+
+        <h2 class="ls-fw-bold ls-mb-24">
+            @Model.SectorNombre
+        </h2>
+
+        @if (!string.IsNullOrEmpty(Model.Campo1Nombre))
+        {
+            <div class="ls-field">
+                <label for="campo1">@Model.Campo1Nombre</label>
+                <input type="text"
+                       id="campo1"
+                       class="ls-input"
+                       value="@Model.Campo1Valor" />
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Campo2Nombre))
+        {
+            <div class="ls-field">
+                <label for="campo2">@Model.Campo2Nombre</label>
+                <input type="text"
+                       id="campo2"
+                       class="ls-input"
+                       value="@Model.Campo2Valor" />
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Campo3Nombre))
+        {
+            <div class="ls-field">
+                <label for="campo3">@Model.Campo3Nombre</label>
+                <input type="text"
+                       id="campo3"
+                       class="ls-input"
+                       value="@Model.Campo3Valor" />
+            </div>
+        }
+
+        <div class="ls-estado-grid ls-mt-24">
+            @foreach (var estado in Model.Estados)
+            {
+                <button class="ls-estado-btn is-@estado.Tone estado-btn"
+                        data-estado-id="@estado.Id">
+
+                    @estado.Nombre
+                </button>
+            }
+        </div>
+
+        <div id="mensaje-estado" class="ls-feedback"></div>
+
+    </div>
+</div>

@@ -1,0 +1,221 @@
+# 🧩 LITESTATE — CASOS DE USO REALES (RESUMEN OPERATIVO)
+
+## 🎯 OBJETIVO
+
+Modelar cómo se usa realmente LiteState desde la perspectiva de usuarios reales de planta, definiendo:
+
+* actores
+* flujos
+* validaciones
+* comportamiento esperado
+* experiencia operativa
+
+---
+
+# 🥇 CASO DE USO 1 — OPERARIO ACTUALIZA ESTADO
+
+## Actor
+
+Operario.
+
+## Objetivo
+
+Actualizar rápidamente el estado actual de un sector.
+
+## Flujo resumido
+
+1. Login
+2. Sistema detecta sectores asignados
+3. Selecciona sector (si tiene varios)
+4. Sistema carga campos configurables y estados
+5. Completa hasta 3 campos
+6. Presiona botón de estado
+7. Sistema valida
+8. INSERT en Evento
+9. UPDATE en EstadoActual
+10. Dashboard refleja cambios automáticamente
+
+## Reglas importantes
+
+* NO existe botón Guardar
+* El botón de estado guarda automáticamente
+* Tiempo objetivo: menos de 3 segundos
+* Recordar último sector usado
+
+## Resultado esperado
+
+El operario:
+
+* navega poco
+* escribe poco
+* actualiza rápido
+
+---
+
+# 🥈 CASO DE USO 2 — OPERARIO FINALIZA PROCESO
+
+## Actor
+
+Operario.
+
+## Objetivo
+
+Marcar un proceso/lote/tarea como finalizado.
+
+## Flujo resumido
+
+1. Completa datos finales
+2. Presiona estado FINALIZADO
+3. Sistema guarda Evento
+4. Sistema actualiza EstadoActual
+5. Dashboard muestra estado atenuado
+6. Luego puede ocultarse o pasar a actividad reciente
+
+## Resultado esperado
+
+La operación mantiene continuidad visual y trazabilidad.
+
+---
+
+# 🥉 CASO DE USO 3 — ADMIN CREA SECTOR
+
+## Actor
+
+Administrador.
+
+## Objetivo
+
+Crear un nuevo sector operativo.
+
+## Flujo resumido
+
+1. Administración > Sectores
+2. Nuevo Sector
+3. Completa:
+
+   * nombre
+   * orden visual
+   * activo
+4. Configura hasta 3 campos dinámicos
+5. Guarda
+
+## Resultado esperado
+
+El sistema se adapta fácilmente a:
+
+* producción
+* logística
+* servicios
+* industrias
+
+---
+
+# 🏭 CASO DE USO 4 — ADMIN CONFIGURA ESTADOS
+
+## Actor
+
+Administrador.
+
+## Objetivo
+
+Definir estados operativos visibles.
+
+## Flujo resumido
+
+1. Administración > Estados
+2. Crear estado
+3. Definir:
+
+   * nombre
+   * color
+   * orden
+   * si es finalizado
+4. Guardar
+
+## Resultado esperado
+
+Cada empresa adapta:
+
+* colores
+* lenguaje
+* flujo operativo
+
+---
+
+# 📺 CASO DE USO 5 — ADMIN CREA DASHBOARD TV
+
+## Actor
+
+Administrador.
+
+## Objetivo
+
+Crear dashboards visuales para TVs y oficinas.
+
+## Flujo resumido
+
+1. Administración > Dashboards
+2. Nuevo Dashboard
+3. Define:
+
+   * nombre
+   * tipo
+   * sectores
+4. Sistema genera token
+5. Se genera URL:
+
+```plaintext id="f8m4ty"
+/monitor/{token}
+```
+
+6. TV abre dashboard
+
+## Resultado esperado
+
+Monitores:
+
+* simples
+* sin login
+* siempre visibles
+
+---
+
+# 📺 CASO DE USO 6 — DASHBOARD EN TIEMPO REAL
+
+## Actor
+
+Supervisor / dueño / cliente.
+
+## Objetivo
+
+Visualizar el estado operativo actual de la empresa.
+
+## Flujo resumido
+
+1. TV abre dashboard
+2. Sistema consulta EstadoActual
+3. Renderiza tarjetas por sector
+4. Polling automático cada 5 segundos
+5. Actualización automática sin recargar
+
+## Resultado esperado
+
+La empresa:
+
+> “ve la operación viva en tiempo real”
+
+---
+
+# 🔥 CONCLUSIÓN
+
+Los casos de uso:
+
+* validan el producto
+* consolidan arquitectura
+* mejoran UX
+* revelan necesidades reales
+* preparan implementación técnica
+
+LiteState se consolida como:
+
+> una plataforma visual operativa en tiempo real, rápida, simple y adaptable a múltiples industrias.

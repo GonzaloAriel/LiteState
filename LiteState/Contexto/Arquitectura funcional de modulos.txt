@@ -1,0 +1,328 @@
+# 🧱 LITESTATE — ARQUITECTURA FUNCIONAL DE MÓDULOS (AGREGADO AL CONTEXTO)
+
+## 🎯 OBJETIVO
+
+Organizar LiteState en módulos funcionales claros para:
+
+* evitar caos estructural
+* separar responsabilidades
+* facilitar escalabilidad
+* mantener simplicidad operativa
+
+---
+
+# 🧩 MÓDULOS PRINCIPALES
+
+LiteState se divide en 5 módulos funcionales:
+
+1. Operación
+2. Monitores
+3. Administración
+4. Histórico
+5. Sistema
+
+---
+
+# 👷 1. MÓDULO OPERACIÓN
+
+## Objetivo
+
+Permitir actualización rápida de estados operativos.
+
+## Usuarios
+
+* operarios
+* supervisores de línea
+
+## Responsabilidades
+
+* login
+* selección de sector
+* carga de estados
+* carga de campos operativos
+* actualización rápida
+
+## Pantallas
+
+* Login
+* Selección de sector
+* Pantalla operario
+
+## Prioridad
+
+> máxima velocidad y simplicidad
+
+---
+
+# 📺 2. MÓDULO MONITORES
+
+## Objetivo
+
+Mostrar información operativa en tiempo real.
+
+## Usuarios
+
+* TVs
+* monitores industriales
+* oficinas
+* recepción
+* supervisores
+
+## Responsabilidades
+
+* dashboards en tiempo real
+* acceso por token
+* actualización automática
+* visualización clara y legible
+
+## Tipos de dashboard
+
+* General
+* Sectorial
+* Administrativo visual
+
+## Prioridad
+
+> legibilidad, estabilidad y claridad visual
+
+---
+
+# 🧑‍💼 3. MÓDULO ADMINISTRACIÓN
+
+## Objetivo
+
+Configurar el sistema y estructura operativa.
+
+## Usuarios
+
+* administradores
+* dueños
+* supervisores generales
+
+## Responsabilidades
+
+### Usuarios
+
+* crear usuarios
+* asignar roles
+* asignar sectores
+
+### Sectores
+
+* crear sectores
+* definir orden visual
+* configurar campos dinámicos
+
+### Estados
+
+* crear estados
+* colores
+* orden visual
+
+### Dashboards
+
+* generar dashboards
+* generar tokens
+* asignar sectores
+
+## Prioridad
+
+> configuración simple y flexible
+
+---
+
+# 📊 4. MÓDULO HISTÓRICO
+
+## Objetivo
+
+Permitir trazabilidad operativa.
+
+## Responsabilidades
+
+* consultar eventos históricos
+* filtros por:
+
+  * sector
+  * usuario
+  * estado
+  * fecha
+
+## Filosofía inicial
+
+* simple
+* liviano
+* sin analytics complejos
+
+## Escalabilidad futura
+
+* KPIs
+* métricas
+* tiempos operativos
+* productividad
+
+---
+
+# ⚙️ 5. MÓDULO SISTEMA
+
+## Objetivo
+
+Soporte técnico y configuración general.
+
+## Responsabilidades
+
+### Empresa
+
+* branding
+* logo
+* configuración empresa
+
+### Seguridad
+
+* autenticación
+* permisos
+
+### Configuración
+
+* refresh dashboards
+* tiempo de visibilidad de finalizados
+* configuraciones generales
+
+---
+
+# 🔄 RELACIÓN ENTRE MÓDULOS
+
+Operación:
+
+* genera información
+
+Monitores:
+
+* muestran información
+
+Histórico:
+
+* consulta información histórica
+
+Administración:
+
+* configura estructura
+
+Sistema:
+
+* sostiene plataforma y seguridad
+
+---
+
+# 📐 ESTRUCTURA FUNCIONAL GENERAL
+
+```plaintext id="h9l0t2"
+LiteState
+│
+├── Operación
+│   ├── Login
+│   ├── Sectores
+│   └── Estados
+│
+├── Monitores
+│   ├── General
+│   ├── Sectorial
+│   └── Administrativo
+│
+├── Administración
+│   ├── Usuarios
+│   ├── Sectores
+│   ├── Estados
+│   └── Dashboards
+│
+├── Histórico
+│   └── Eventos
+│
+└── Sistema
+    ├── Empresa
+    └── Seguridad
+```
+
+---
+
+# 🧠 ESTRUCTURA PENSADA PARA ASP.NET CORE MVC
+
+## Controllers
+
+```plaintext id="e2b9d7"
+/Controllers
+    /Operacion
+    /Monitor
+    /Admin
+    /Historico
+```
+
+---
+
+## Services
+
+```plaintext id="ps4v0q"
+/Services
+    /Operacion
+    /Monitor
+    /Admin
+```
+
+---
+
+## Views
+
+```plaintext id="y7d2wu"
+/Views
+    /Operacion
+    /Monitor
+    /Admin
+```
+
+---
+
+# ⚠️ REGLA IMPORTANTE
+
+Los dashboards y monitores:
+
+* deben ser ultra livianos
+* independientes
+* rápidos
+* desacoplados de administración
+
+---
+
+# 🔥 PRIORIDAD REAL DE DESARROLLO
+
+## Fase 1
+
+Operación
+
+## Fase 2
+
+Dashboard TV
+
+## Fase 3
+
+Administración básica
+
+## Fase 4
+
+Histórico
+
+## Fase 5
+
+SaaS / multiempresa avanzado
+
+---
+
+# 🎯 OBJETIVO FINAL
+
+LiteState no debe sentirse como:
+
+* un ERP
+* un panel administrativo
+* una planilla compleja
+
+Debe sentirse como:
+
+> “La operación viva y visible de la empresa.”

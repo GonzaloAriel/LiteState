@@ -1,0 +1,33 @@
+@*
+    LiteState - PageHeader Component
+    Resuelve: bloque de título de pantalla (título + subtítulo + acción primaria).
+    Obligatorio al inicio de toda pantalla web (admin/operacion/historico).
+    Usage:
+    @Html.Partial("~/Views/Shared/Components/_PageHeader.cshtml",
+        new ViewDataDictionary {
+            { "Title", "Clientes" },
+            { "Subtitle", "Administra tus clientes" },
+            { "PrimaryAction", Url.Action("Create") },
+            { "PrimaryActionLabel", "Nuevo Cliente" }
+        })
+*@
+@{
+    string title = ViewBag.Title ?? "";
+    string subtitle = ViewBag.Subtitle ?? "";
+    string primaryAction = ViewBag.PrimaryAction ?? "";
+    string primaryActionLabel = ViewBag.PrimaryActionLabel ?? "";
+}
+
+<div class="ls-page-header">
+    <div>
+        <h1 class="ls-page-header__title">@title</h1>
+        @if (!string.IsNullOrEmpty(subtitle))
+        {
+            <p class="ls-page-header__subtitle">@subtitle</p>
+        }
+    </div>
+    @if (!string.IsNullOrEmpty(primaryAction))
+    {
+        <a class="ls-btn ls-btn--primary" href="@primaryAction">@primaryActionLabel</a>
+    }
+</div>
