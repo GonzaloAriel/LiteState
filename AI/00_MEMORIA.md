@@ -52,9 +52,18 @@ Fuera de V1: métricas, gráficos, SignalR, QR, app móvil, reportes, APIs públ
 
 Estado del ciclo: IMPLEMENTACION.
 
-Siguiente paso: terminar el Módulo Operación (persistencia con EF Core + SQL Server) y luego construir el Dashboard TV.
+Siguiente paso: **Fase 14 del laboratorio Docker (dominio y HTTPS)**. Es la
+tarea en curso y la que desbloquea el resto del recorrido (seguridad del VPS,
+deploy, CI/CD). Continúa en `Docs/Manual Docker - de cero a VPS.md`, que tiene
+las fases 8 a 13 aplicadas y la Fase 14 planificada.
 
-Ciclo en curso:
+En paralelo, el producto sigue pendiente: el Módulo Operación opera con datos
+simulados en `OperacionService` (sin persistencia real) y los Monitores,
+Administración e Histórico no existen. Cuando el laboratorio esté cerrado, la
+persistencia de Operación es INSERT Evento + UPDATE EstadoActual (D-011) contra
+PostgreSQL, no SQL Server: la decisión de stack D-015 sustituyó a D-002.
+
+Ciclo del producto (V1):
 1) Operación (estados, campos, comparar CSS por módulo)
 2) Monitor / Dashboard TV
 3) Administración básica

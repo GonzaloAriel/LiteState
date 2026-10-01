@@ -30,4 +30,19 @@ a no repetir.
 
 ## RESUELTOS
 
-(ninguno aún)
+- P-006: nginx con bloque `upstream { server app:8080; }` devolvía 502
+  permanentes después de cada `docker compose up --build`. Causa: nginx resuelve
+  los nombres UNA sola vez al arrancar; recrear el contenedor `app` le asigna una
+  IP interna nueva y nginx sigue hablando con la vieja. Solución: `resolver
+  127.0.0.11 valid=10s ipv6=off` + `set $var http://app:8080` y
+  `proxy_pass $var`, para que la resolución ocurra en cada request. Se pierde el
+  pooling de conexiones del `upstream`; para LiteState (peticiones chicas cada 5s,
+  D-009) el canje es favorable. Patrón a no repetir en cualquier config de
+  nginx dentro de Docker. Ver D-023 y la Fase 13 del manual.
+
+- P-007: la Fase 13 afirmaba que con PostgreSQL detenido nginx respondía 502.
+  Es falso: da 200 (o 500 si la página consulta la base). Causa: confusion entre
+  capas. El 502 significa "no pude hablar con la app", nunca "se cayó la base".
+  Solución: verificado que cada capa falla con su propio código y que por eso los
+  4 servicios tienen healthchecks separados. Patrón a no repetir: "caer la base de
+  datos" y "caerse el servidor" son fallos distintos con diagnósticos distintos.

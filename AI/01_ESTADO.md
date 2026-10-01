@@ -135,6 +135,18 @@ Red: `litestate_default`. Volúmenes: `litestate_pgdata`,
 Único servicio con puerto publicado hacia el exterior del stack: nginx (:80).
 Los datos siguen intactos: la Fase 13 no tocó los volúmenes.
 
-Pendiente de git: los archivos del laboratorio (compose.yaml, nginx/litestate.conf,
-.env ignorado, Dockerfile, .dockerignore, Docs/, Backups/, AI/ y ~20 archivos
-modificados del proyecto) siguen sin commitear desde `acb5fd5`.
+### Estado de git (2026-09-30)
+
+Todo el laboratorio está commiteado en un único commit: `2ab13dc`
+("Laboratorio Docker: fases 8 a 13", 79 archivos). Precedido por `acb5fd5` e
+`5da0460`. Working tree limpio.
+
+Pendientes:
+
+- **El remoto `origin` apunta a `https://github.com/GonzaloAriel/LiteState.git`
+  pero ese repositorio NO existe en GitHub** ("Repository not found"). Hay
+  que crearlo con ese nombre exacto, o cambiar la URL con
+  `git remote set-url origin <nueva>`, y recién después `git push -u origin main`.
+- **`.env` no está en el repo por diseño** (D-020). Al desplegar hay que
+  generarlo de nuevo en el VPS.
+- `Backups/` y `*.sql` también fuera del repo (D-022), por datos sensibles.
